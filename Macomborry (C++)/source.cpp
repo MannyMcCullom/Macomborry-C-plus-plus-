@@ -3,11 +3,12 @@ Sorry Video game
 //*/
 
 #include <iostream>
+#include <cstdlib>
+
+using namespace std;
 
 const int numOfCardTypes = 11;
 const int numOfCards = 45;
-
-using namespace std;
 
 struct card {
 	string label;
@@ -15,8 +16,12 @@ struct card {
 	string optionTwo;
 };
 
+void printDeck(card*);
+void shuffleDeck(card*);
+
 int main()
 {
+	srand(time(0));
 	card cards[numOfCardTypes];
 
 	// Set card values
@@ -84,64 +89,149 @@ int main()
 		}
 	}
 
-	card deck[numOfCards];
+	card* pDeck;
+	pDeck = new card[numOfCards];
 	int cardNum = 0;
 
 	// Add cards to deck
 	for (int index = 0; index < numOfCards; index++)
 	{
+		cardNum = 0;
+
 		switch (index)
 		{
+		case 0:
+		case 1:
+		case 2:
+		case 3:
 		case 4:
 			cardNum = 0;
-			cout << "Added 5 " + cards[cardNum].label + " cards to deck." << endl;
 			break;
+		case 5:
+		case 6:
+		case 7:
 		case 8:
 			cardNum = 1;
-			cout << "Added 4 " + cards[cardNum].label + " cards to deck." << endl;
 			break;
+		case 9:
+		case 10:
+		case 11:
 		case 12:
 			cardNum = 2;
-			cout << "Added 4 " + cards[cardNum].label + " cards to deck." << endl;
 			break;
+		case 13:
+		case 14:
+		case 15:
 		case 16:
 			cardNum = 3;
-			cout << "Added 4 " + cards[cardNum].label + " cards to deck." << endl;
 			break;
+		case 17:
+		case 18:
+		case 19:
 		case 20:
 			cardNum = 4;
-			cout << "Added 4 " + cards[cardNum].label + " cards to deck." << endl;
 			break;
+		case 21:
+		case 22:
+		case 23:
 		case 24:
 			cardNum = 5;
-			cout << "Added 4 " + cards[cardNum].label + " cards to deck." << endl;
 			break;
+		case 25:
+		case 26:
+		case 27:
 		case 28:
 			cardNum = 6;
-			cout << "Added 4 " + cards[cardNum].label + " cards to deck." << endl;
 			break;
+		case 29:
+		case 30:
+		case 31:
 		case 32:
 			cardNum = 7;
-			cout << "Added 4 " + cards[cardNum].label + " cards to deck." << endl;
 			break;
+		case 33:
+		case 34:
+		case 35:
 		case 36:
 			cardNum = 8;
-			cout << "Added 4 " + cards[cardNum].label + " cards to deck." << endl;
 			break;
+		case 37:
+		case 38:
+		case 39:
 		case 40:
 			cardNum = 9;
-			cout << "Added 4 " + cards[cardNum].label + " cards to deck." << endl;
 			break;
+		case 41:
+		case 42:
+		case 43:
 		case 44:
 			cardNum = 10;
-			cout << "Added 4 " + cards[cardNum].label + " cards to deck." << endl;
 			break;
 		default:
 			break;
 		}
+
+		pDeck[index] = cards[cardNum];
+		cout << "Added " + pDeck[index].label + " card to deck." << endl;
 	}
 
-	// Shuffle cards
+	printDeck(pDeck);
+
+	shuffleDeck(pDeck);
+	shuffleDeck(pDeck);
+	shuffleDeck(pDeck);
+
+	printDeck(pDeck);
 
 	return 0;
+}
+
+// Print deck
+void printDeck(card* deck)
+{
+	for (int index = 0; index < numOfCards; index++)
+	{
+		cout << deck[index].label << endl;
+	}
+
+	cout << endl;
+}
+
+// Shuffle deck
+void shuffleDeck(card* deck)
+{
+	bool switched = false;
+
+	int cardTrack[numOfCards];
+	int randomCard = 0;
+
+	card* pNewDeck;
+	pNewDeck = new card[numOfCards];
+
+	for (int index = 0; index < numOfCards; index++)
+	{
+		cardTrack[index] = 0;
+	}
+
+	for (int index = 0; index < numOfCards; index++)
+	{
+		switched = false;
+
+		while (switched == false)
+		{
+			randomCard = rand() % numOfCards;
+
+			if (cardTrack[randomCard] == 0)
+			{
+				switched = true;
+				cardTrack[randomCard] = 1;
+				pNewDeck[index] = deck[randomCard];
+			}
+		}
+	}
+
+	for (int index = 0; index < numOfCards; index++)
+	{
+		deck[index] = pNewDeck[index];
+	}
 }
