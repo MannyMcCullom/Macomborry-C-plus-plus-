@@ -7,6 +7,8 @@ Sorry Video game
 
 using namespace std;
 
+const bool DEBUG = true;
+
 const int numOfCardTypes = 11;
 const int numOfCards = 45;
 
@@ -16,13 +18,15 @@ struct card {
 	string optionTwo;
 };
 
-void printDeck(card*);
+void printDeck(const card*);
 void shuffleDeck(card*);
+void initializeDeck(card*&, const card[]);
 
 int main()
 {
 	srand(time(0));
 	card cards[numOfCardTypes];
+	card* pDeck;
 
 	// Set card values
 	for (int index = 0; index < numOfCardTypes; index++)
@@ -89,15 +93,105 @@ int main()
 		}
 	}
 
-	card* pDeck;
-	pDeck = new card[numOfCards];
-	int cardNum = 0;
+	initializeDeck(pDeck, cards);
 
-	// Add cards to deck
+	printDeck(pDeck);
+
+	shuffleDeck(pDeck);
+	shuffleDeck(pDeck);
+	shuffleDeck(pDeck);
+
+	printDeck(pDeck);
+
+	return 0;
+}
+
+// Print deck
+void printDeck(const card* deck)
+{
+	if (DEBUG == true)
+	{
+		cout << "DEBUG: Entering printDeck()" << endl;
+	}
+
 	for (int index = 0; index < numOfCards; index++)
 	{
-		cardNum = 0;
+		cout << deck[index].label << endl;
+	}
 
+	cout << endl;
+
+	if (DEBUG == true)
+	{
+		cout << "DEBUG: Exiting printDeck()" << endl;
+	}
+}
+
+// Shuffle deck
+void shuffleDeck(card* deck)
+{
+	if (DEBUG == true)
+	{
+		cout << "DEBUG: Entering shuffleDeck()" << endl;
+	}
+
+	bool switched = false;
+
+	int randomCard = 0;
+	int cardTrack[numOfCards];
+
+	card* pNewDeck;
+	pNewDeck = new card[numOfCards];
+
+	for (int index = 0; index < numOfCards; index++)
+	{
+		cardTrack[index] = 0;
+	}
+
+	for (int index = 0; index < numOfCards; index++)
+	{
+		switched = false;
+
+		while (switched == false)
+		{
+			randomCard = rand() % numOfCards;
+
+			if (cardTrack[randomCard] == 0)
+			{
+				switched = true;
+				cardTrack[randomCard] = 1;
+				pNewDeck[index] = deck[randomCard];
+			}
+		}
+	}
+
+	for (int index = 0; index < numOfCards; index++)
+	{
+		deck[index] = pNewDeck[index];
+	}
+
+	delete[] pNewDeck;
+
+	if (DEBUG == true)
+	{
+		cout << "DEBUG: Exiting shuffleDeck()" << endl;
+	}
+}
+
+// Initialize deck
+void initializeDeck(card *&deck, const card cards[])
+{
+	if (DEBUG == true)
+	{
+		cout << "DEBUG: Entering initializeDeck()" << endl;
+	}
+
+	deck = new card[numOfCards];
+
+	int cardNum = 0;
+
+	for (int index = 0; index < numOfCards; index++)
+	{
 		switch (index)
 		{
 		case 0:
@@ -171,67 +265,15 @@ int main()
 			break;
 		}
 
-		pDeck[index] = cards[cardNum];
-		cout << "Added " + pDeck[index].label + " card to deck." << endl;
+		deck[index].label = cards[cardNum].label;
+		deck[index].optionOne = cards[cardNum].optionOne;
+		deck[index].optionTwo = cards[cardNum].optionTwo;
+
+		cout << "Added " + deck[index].label + " card to deck." << endl;
 	}
 
-	printDeck(pDeck);
-
-	shuffleDeck(pDeck);
-	shuffleDeck(pDeck);
-	shuffleDeck(pDeck);
-
-	printDeck(pDeck);
-
-	return 0;
-}
-
-// Print deck
-void printDeck(card* deck)
-{
-	for (int index = 0; index < numOfCards; index++)
+	if (DEBUG == true)
 	{
-		cout << deck[index].label << endl;
-	}
-
-	cout << endl;
-}
-
-// Shuffle deck
-void shuffleDeck(card* deck)
-{
-	bool switched = false;
-
-	int cardTrack[numOfCards];
-	int randomCard = 0;
-
-	card* pNewDeck;
-	pNewDeck = new card[numOfCards];
-
-	for (int index = 0; index < numOfCards; index++)
-	{
-		cardTrack[index] = 0;
-	}
-
-	for (int index = 0; index < numOfCards; index++)
-	{
-		switched = false;
-
-		while (switched == false)
-		{
-			randomCard = rand() % numOfCards;
-
-			if (cardTrack[randomCard] == 0)
-			{
-				switched = true;
-				cardTrack[randomCard] = 1;
-				pNewDeck[index] = deck[randomCard];
-			}
-		}
-	}
-
-	for (int index = 0; index < numOfCards; index++)
-	{
-		deck[index] = pNewDeck[index];
+		cout << "DEBUG: Exiting initializeDeck()" << endl;
 	}
 }
