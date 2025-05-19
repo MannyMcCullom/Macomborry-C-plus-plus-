@@ -68,6 +68,11 @@ void deck::setCards()
 	}
 }
 
+card deck::getCard(int cardNum)
+{
+	return pDeck[cardNum];
+}
+
 // Create deck
 void deck::initializeDeck()
 {
@@ -216,4 +221,9 @@ deck::deck()
 {
 	setCards();
 	initializeDeck();
+}
+
+deck::~deck()
+{
+	delete[] pDeck;
 }

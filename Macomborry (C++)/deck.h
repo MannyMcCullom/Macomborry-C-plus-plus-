@@ -14,12 +14,15 @@ class deck
 {
 public:
 	void setCards();
-	void initializeDeck();
 
+	card getCard(int);
+
+	void initializeDeck();
 	void printDeck() const;
 	void shuffleDeck();
 
 	deck();
+	~deck();
 
 private:
 	card cards[numOfCardTypes];
