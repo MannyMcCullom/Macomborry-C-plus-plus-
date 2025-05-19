@@ -13,9 +13,9 @@ public:
 	void setOptionOne(string);
 	void setOptionTwo(string);
 
-	string getLabel();
-	string getOptionOne();
-	string getOptionTwo();
+	string getLabel() const;
+	string getOptionOne() const;
+	string getOptionTwo() const;
 	
 	card();
 

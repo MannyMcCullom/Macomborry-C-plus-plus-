@@ -15,17 +15,17 @@ void card::setOptionTwo(string newOptionTwo)
 	optionTwo = newOptionTwo;
 }
 
-string card::getLabel()
+string card::getLabel() const
 {
 	return label;
 }
 
-string card::getOptionOne()
+string card::getOptionOne() const
 {
 	return optionOne;
 }
 
-string card::getOptionTwo()
+string card::getOptionTwo() const
 {
 	return optionTwo;
 }
